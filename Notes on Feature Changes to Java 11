@@ -1,0 +1,197 @@
+Example of how to use Github as project container: https://github.com/eugenp/tutorials/tree/master/core-java-modules/core-java-11
+
+Source: https://www.whizlabs.com/blog/java-11-features/
+Go to site for code examples 
+No deployment stack is ideal for running applets and web applications. Unavailability of deployment stack also involves removal of a complete section of supported browsers from list of supported configurations. 
+
+Java 11 also excludes JRE or Server JRE, and users get only JDK. Java language translation for certain languages is unavailable in Java 11. 
+*** Get with Skye about  Lambda Parameters
+1. Type Inference for Lambda Parameters - The first mention among the latest Java 11 features with examples is type inference for lambda parameters. Now, you can choose to specify types of lambda parameters or omitting them when writing a lambda expression. However, Java 11 features help you achieve it. Allowing ‘var’ provides two prominent advantages. First of all, it introduces uniformity in the mental model for ‘var’ through the removal of a special case. The second advantage is the facility for type annotations on lambda parameters without the need for a full type name. Java 11 supports mixing implicit types, explicit types and ‘var’ in lambdas albeit with complex implementation. However, you may have to add ‘var’ to all parameters for applying annotations.
+
+
+2. String::lines
+Another new feature in Java 11 is the ‘String::lines’ which helps in streaming lines. The Java 11 features of String::lines are ideal for situations where you have a multiline string. You can note that the string uses Windows’ \r\n and the “lines ()” splits it. The method assumes \r, \n, and \r\n as line terminators even if they are mixed in the same string. Streamed lines do not contain line terminator, and they could be empty such as “like\n\nin this\n\ncase” having five lines. However, the line at the end of the string is ignored if it is empty such as “like\nhere\n” with two lines. With the “String::lines” feature, search for new line terminators is faster, and performance improves considerably.
+
+3. New Characters, Scripts, and Blocks
+
+4. Standard HTTP Client - Another prominent difference between different versions of Java and Java 11 is the standardization of incubated HTTP client API. Now, there is no incubating API in the “jdk.incubator.http” package as before. Code using types from the “jdk.incubator.http” package needs updates for importing HTTP types from “java.net.http” standard package.
+
+5. .toArray(IntFunction) Default Method
+After the Java 11 release date, another new feature in Java 11 also comes to the front. The new feature is the .toArray(IntFunction) default method, which is now a part of the ‘java.util.Collection’ interface. The method helps in transferring elements in the collection to a newly created array having specific runtime type. You can assume it as an overload of the toArray (T[ ]) method used for taking array instance as an argument.
+
+6. Epsilon Garbage Collector - The No-Op garbage collector is ideal for handling only memory allocation without implementing any memory reclamation apparatus. Epsilon GC is also helpful for cost-benefit comparison of other garbage collectors and performance testing. The goals of this collector are described in JEP 318: Epsilon: A No-Op Garbage Collector:
+http://openjdk.java.net/jeps/318
+
+Performance testing.
+Memory pressure testing.
+VM interface testing.
+Extremely short lived jobs.
+Last-drop latency improvements.
+Last-drop throughput improvements.
+
+7. Low-overhead Heap Profiling - Java 11 provides the feature of a low-overhead approach to sampling of Java heap allocations through the JVMTI (Java Virtual Machine Tools Interface)
+
+8. Improved KeyStore Mechanisms - You can find a new security property with the name ‘jceks.key.serialFilter’ in Java 11. JCEKS KeyStore users this security filter at the time of deserialization of encrypted key object housed in a SecretKeyEntry. Without any configuration, the filter result renders an UNDECIDED value and obtains default configuration by ‘jdk.serialFilter.’
+
+9. Z Garbage Collector - the ZGC or Z garbage collector is a scalable low-latency garbage collected ideal for addressing specific objectives. The Z garbage collector ensures that pause times do not go beyond 10ms. It also ensures that pause times do not increase with the size of the heap or live-set. Finally, ZGC also manages heaps of varying sizes from 100 megabytes to multi terabytes.
+
+10. Dynamic Allocation of Compiler Threads - Dynamic control of compiler threads is possible now in Java 11 with a new command line flag. The command-line flag is ‘-XX: +UseDynamicNumberOfCompilerThreads.’ The VM starts numerous compiler threads on systems with multiple CPUs in the tiered compilation mode. 
+
+11. New File Methods - New file methods among Java 11 features are also prominent attractions in the new Java release. The new file methods include: 
+writeString() is ideal for writing some content in a file
+readString() is ideal for reading contents in a file
+isSameFile() method helps in knowing whether two paths identify the same file.
+strip(), stripLeading(), stripTrailing()
+
+strip() – Removes the white space from both, beginning and the end of string.
+
+But we already have trim(). Then what’s the need of strip()?
+strip() is “Unicode-aware” evolution of trim().
+
+When trim() was introduced, Unicode wasn’t evolved. Now, the new strip() removes all kinds of whitespaces leading and trailing(check the method Character.isWhitespace(c) to know if a unicode is whitespace or not)
+repeat(int) - The repeat method simply repeats the string that many numbers of times as mentioned in the method in the form of an int.
+
+https://www.journaldev.com/24601/java-11-features
+Java 11 Features
+1) Running Java File with single command - One major change is that you don’t need to compile the java source file with javac tool first. You can directly run the file with java command and it implicitly compiles.
+This feature comes under JEP 330.
+
+2) Java String Methods
+isBlank() – This instance method returns a boolean value. Empty Strings and Strings with only white spaces are treated as blank.
+lines() - This method returns a string array which is a collection of all substrings split by lines.
+3) Local-Variable Syntax for Lambda Parameters - JEP 323, Local-Variable Syntax for Lambda Parameters is the only language feature release in Java 11.
+In Java 10, Local Variable Type Inference was introduced. Thus we could infer the type of the variable from the RHS (right hand side) – 
+var list = new ArrayList<String>();
+JEP 323 allows var to be used to declare the formal parameters of an implicitly typed lambda expression.
+
+We can now define :
+(var s1, var s2) -> s1 + s2
+This was possible in Java 8 too but got removed in Java 10. Now it’s back in Java 11 to keep things uniform.
+
+But why is this needed when we can just skip the type in the lambda?
+If you need to apply an annotation just as @Nullable, you cannot do that without defining the type.
+
+Limitation of this feature – You must specify the type var on all parameters or none.
+Things like the following are not possible:
+
+
+(var s1, s2) -> s1 + s2 //no skipping allowed
+(var s1, String y) -> s1 + y //no mixing allowed
+
+var s1 -> s1 //not allowed. Need parentheses if you use var in lambda.
+
+4) Nested Based Access Control 
+Before Java 11 this was possible:
+
+public class Main {
+ 
+    public void myPublic() {
+    }
+ 
+    private void myPrivate() {
+    }
+ 
+    class Nested {
+ 
+        public void nestedPublic() {
+            myPrivate();
+        }
+    }
+}
+private method of the main class is accessible from the above-nested class in the above manner.
+But if we use Java Reflection, it will give an IllegalStateException.
+
+Method method = ob.getClass().getDeclaredMethod("myPrivate");
+method.invoke(ob);
+
+
+Java 11 nested access control addresses this concern in reflection.
+java.lang.Class introduces three methods in the reflection API: getNestHost(), getNestMembers(), and isNestmateOf().
+
+5) JEP 309: Dynamic Class-File Constants - The Java class-file format now extends support a new constant pool form, CONSTANT_Dynamic. The goal of this JEP is to reduce the cost and disruption of developing new forms of materializable class-file constraints, by creating a single new constant-pool form that can be parameterized with user-provided behavior.
+This enhances performance
+
+6) JEP 318: Epsilon: A No-Op Garbage Collector - Unlike the JVM GC which is responsible for allocating memory and releasing it, Epsilon only allocates memory.
+It allocates memory for the following things:
+
+Performance testing.
+Memory pressure testing.
+VM interface testing.
+Extremely short lived jobs.
+Last-drop latency improvements.
+Last-drop throughput improvements.
+Now Elipson is good only for test environments. It will lead to OutOfMemoryError in production and crash the applications.
+
+The benefit of Elipson is no memory clearance overhead. Hence it’ll give an accurate test result of performance and we can no longer GC for stopping it.
+
+Note: This is an experimental feature.
+
+7) JEP 320: Remove the Java EE and CORBA Modules - The modules were already deprecated in Java 9. They are now completely removed.
+Following packages are removed: java.xml.ws, java.xml.bind, java.activation, java.xml.ws.annotation, java.corba, java.transaction, java.se.ee, jdk.xml.ws, jdk.xml.bind
+
+8) JEP 328: Flight Recorder - Flight Recorder which earlier used to be a commercial add-on in Oracle JDK is now open-sourced since Oracle JDK is itself not free anymore.
+JFR is a profiling tool used to gather diagnostics and profiling data from a running Java application.
+Its performance overhead is negligible and that’s usually below 1%. Hence it can be used in production applications.
+
+9) JEP 321: HTTP Client - Java 11 standardizes the Http CLient API.
+The new API supports both HTTP/1.1 and HTTP/2. It is designed to improve the overall performance of sending requests by a client and receiving responses from the server. It also natively supports WebSockets.
+
+10) Reading/Writing Strings to and from the Files - Java 11 strives to make reading and writing of String convenient.
+It has introduced the following methods for reading and writing to/from the files:
+
+readString()
+writeString()
+Following code showcases an example of this
+
+Path path = Files.writeString(Files.createTempFile("test", ".txt"), "This was posted on JD");
+System.out.println(path);
+String s = Files.readString(path);
+System.out.println(s); //This was posted on JD
+
+11) JEP 329: ChaCha20 and Poly1305 Cryptographic Algorithms - Java 11 provides ChaCha20 and ChaCha20-Poly1305 cipher implementations. These algorithms will be implemented in the SunJCE provider.
+
+12) JEP 315: Improve Aarch64 Intrinsics - Improve the existing string and array intrinsics, and implement new intrinsics for the java.lang.Math sin, cos, and log functions, on AArch64 processors.
+
+13) JEP 333: ZGC: A Scalable Low-Latency Garbage Collector (Experimental) - Java 11 has introduced a low latency GC. This is an experimental feature.
+It’s good to see that Oracle is giving importance to GC’s.
+
+14) JEP 335: Deprecate the Nashorn JavaScript Engine - Nashorn JavaScript script engine and APIs are deprecated thereby indicating that they will be removed in the subsequent releases.
+
+
+Deprecated or Removed APIs
+See: https://www.oracle.com/technetwork/java/javase/11-relnote-issues-5012449.html#Removed
+http://cr.openjdk.java.net/~iris/se/11/latestSpec/#APIs-removed
+Complete Deprecated List: https://docs.oracle.com/en/java/javase/11/docs/api/deprecated-list.html
+
+APIs removed  
+Following the conventions established by the Enhanced Deprecation feature, various modules and APIs were annotated with forRemoval=true in the “APIs Proposed for Removal” section of the Java SE 9 Platform Specification and the Java SE 10 Platform Specification.
+
+Seven modules that were proposed for removal by the Java SE 9 and 10 Platform Specifications are removed from this Specification. More information about these modules and their APIs is available in JEP 320. Standalone versions of the APIs and their implementations are readily available.
+
+java.activation
+java.corba
+java.se.ee (aggregator)
+java.transaction
+java.xml.bind
+java.xml.ws
+java.xml.ws.annotation
+The following individual APIs are removed from this Specification. Many have been deprecated since at least Java SE 1.4 and have been superseded by newer APIs. The number in parentheses indicates the Java SE Platform Specification which first proposed their removal.
+
+Classes
+
+javax.security.auth.Policy (10)
+Methods
+
+java.lang.Runtime.runFinalizersOnExit(boolean) (9)
+java.lang.SecurityManager.checkAwtEventQueueAccess() (9)
+java.lang.SecurityManager.checkMemberAccess(java.lang.Class,int) (9)
+java.lang.SecurityManager.checkSystemClipboardAccess() (9)
+java.lang.SecurityManager.checkTopLevelWindow(java.lang.Object) (9)
+java.lang.System.runFinalizersOnExit(boolean) (9)
+java.lang.Thread.destroy() (9)
+java.lang.Thread.stop(java.lang.Throwable) (9)
+
+Non-API features removed  
+The following non-API feature was removed.
+
+SNMP Support Monitoring and management of the Java Virtual Machine is supported primarily by JMX, but also, since Java SE 5.0, by SNMP. However, developer interest in SNMP has been low, and no longer justifies SNMP support in the Java SE Platform. Consequently, this Specification removes the SNMP Management Information Base (MIB) defined for the JVM by JSR 174. (JDK 5.0 implemented an SNMP agent to publish the MIB. The SNMP agent was included in the JDK until its removal in JDK 11.)
