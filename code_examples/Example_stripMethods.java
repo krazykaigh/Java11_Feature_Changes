@@ -1,4 +1,4 @@
-public class Main {
+public class Example_stripMethods {
     public static void main(String[] args) throws Exception {
         // Your code here!
         
