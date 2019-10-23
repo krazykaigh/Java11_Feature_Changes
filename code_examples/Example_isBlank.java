@@ -1,8 +1,10 @@
+//  https://www.journaldev.com/24601/java-11-features
+
 import java.util.*;
 
-public class Main {
-    public static void main(String[] args) throws Exception {
-        // Your code here!
+public class Example_isBlank {
+    public static void main(String[] args)  {
+        int a = 0;
         
         System.out.println(" ".isBlank()); //true
         
