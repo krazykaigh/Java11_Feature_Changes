@@ -1,0 +1,65 @@
+Understanding Lambda Expressions Tutorial
+https://www.youtube.com/watch?v=VLTEPWkEhsg
+
+JEP 323: Local-Variable Syntax for Lambda Parameters
+JDK 10 introduced the Local-Variable Type Inference (JEP 286). This simplifies the code, as you no longer need to explicitly state the type of a local-variable but can, instead, use var. JEP 323 extends the use of this syntax to the parameters of Lambda expressions. Here’s a simple example:
+
+list.stream()
+    .map((var s) -> s.toLowerCase())
+    .collect(Collectors.toList());
+
+
+Of course, the astute Java programmer would point out that Lambda expressions already have type inference so the use of var would (in this case) be superfluous. We could just as easily write the same code as:
+
+list.stream()
+     .map(s -> s.toLowerCase())
+     .collect(Collectors.toList());
+
+
+Why add var support, then? The answer is for one special case, which is when you want to add an annotation to the Lambda parameter. It is not possible to do this without a type being involved. To avoid having to use the explicit type, we can use var to simplify things, thus:
+
+list.stream()
+      .map((@Notnull var s) -> s.toLowerCase())
+      .collect(Collectors.toList());
+
+
+This feature has required changes to the Java Language Specification (JLS), specifically:
+
+Page 24: The description of the var special identifier.
+Page 627-30: Lambda parameters
+Page 636: Runtime evaluation of Lambda expressions
+Page 746: Lambda syntax
+
+#####################################
+
+Local-Variable Syntax for Lambda Parameters: JDK 11 allows ‘var’ to be used in lambda expressions. This was introduced to be consistent with local ‘var’ syntax of Java 10.
+filter_none
+brightness_4
+//Variable used in lambda expression 
+  
+public class VarInLambdaExample { 
+  public static void main(String[] args) { 
+      IntStream.of(1, 2, 3, 5, 6, 7) 
+               .filter((var i) -> i % 2 == 0) 
+               .forEach(System.out::println); 
+  } 
+} 
+Output:
+
+2
+6
+filter_none
+brightness_4
+//Variable without using lambda expression 
+  
+public class WithoutVarInLambdaExample { 
+  public static void main(String[] args) { 
+      IntStream.of(1, 2, 3, 5, 6, 7) 
+               .filter(i -> i % 2 == 0) 
+               .forEach(System.out::println); 
+  } 
+} 
+Output:
+
+2
+6
