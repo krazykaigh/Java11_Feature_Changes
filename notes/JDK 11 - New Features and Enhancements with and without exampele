@@ -1,4 +1,5 @@
 Oracle JDK 11 - New Features and Enhancements
+Source: https://www.oracle.com/technetwork/java/javase/11-relnote-issues-5012449.html
 
 core-libs/java.lang - NO EXAMPLES
 ➜ JEP 327 Unicode 10 
@@ -62,3 +63,132 @@ tools/launcher
 
 DEPRECATED FEATURES AND OPTIONS
 
+client-libs
+➜ Removal of com.sun.awt.AWTUtilities Class 
+The com.sun.awt.AWTUtilities class was deprecated with forRemoval=true in JDK 10 (JDK-8187253). This class was unused in the JDK and has been removed in this release.
+
+client-libs/2d
+➜ Removal of Lucida Fonts from Oracle JDK 
+Oracle JDK no longer ships any fonts and relies entirely on fonts installed on the operating system.
+
+client-libs/java.awt
+➜ Removal of appletviewer Launcher 
+The appletviewer tool was deprecated in JDK 9 (see JDK-8074165) and removed in this release.
+
+client-libs/javax.imageio
+➜ Oracle JDK's javax.imageio JPEG Plugin No Longer Supports Images with alpha 
+
+core-libs
+➜ Removal of sun.misc.Unsafe.defineClass 
+The sun.misc.Unsafe.defineClass class has been removed.
+
+core-libs/java.lang
+➜ Removal of Thread.destroy() and Thread.stop(Throwable) Methods 
+The methods Thread.destroy() and Thread.stop(Throwable) have been removed. 
+
+core-libs/java.nio
+➜ Removal of sun.nio.ch.disableSystemWideOverlappingFileLockCheck Property 
+The property sun.nio.ch.disableSystemWideOverlappingFileLockCheck has been removed.
+
+core-libs/java.util:i18n
+➜ Removal of sun.locale.formatasdefault Property 
+The system property sun.locale.formatasdefault, introduced in JDK 7 for backwards compatibility, has been removed.
+
+core-svc/javax.management
+➜ Removal of JVM-MANAGEMENT-MIB.mib 
+The specification for JVM monitoring and management through SNMP JVM-MANAGEMENT-MIB.mib has been removed.
+
+core-svc/tools
+➜ Removal of SNMP Agent 
+The jdk.snmp module has been removed.
+
+deploy
+➜ Removal of Java Deployment Technologies 
+The Java Plugin and Java WebStart technologies that were deprecated in JDK 9 and marked as candidates for removal in JDK 10, have now been removed. 
+
+infrastructure
+➜ Removal of JMC from the Oracle JDK 
+Java Mission Control (JMC) is no longer included in the JDK bundles.
+
+javafx/other
+➜ Removal of JavaFX from the Oracle JDK 
+The JavaFX modules have been removed from the JDK 11 release. 
+
+other-libs
+➜ JEP 320 Remove the Java EE and CORBA Modules 
+Remove the Java EE and CORBA modules from the Java SE Platform and the JDK.
+
+core-libs/java.util.concurrent
+➜ ThreadPoolExecutor Should Not Specify a Dependency on Finalization 
+Previous versions of ThreadPoolExecutor had a finalize method that shut down the thread pool
+
+docs
+➜ JEP 335 Deprecate the Nashorn JavaScript Engine 
+Deprecate the Nashorn JavaScript script engine and APIs, and the jjs tool, with the intent to remove them in a future release (JEP 335).
+
+hotspot/compiler
+➜ Deprecate -XX+AggressiveOpts 
+The VM option -XX:+AggressiveOpts is deprecated in JDK 11 and will be removed in a future release. The option was originally supposed to enable experimental optimizations of the C2 compiler to improve performance of specific benchmarks. 
+
+hotspot/runtime
+➜ Obsolete Support for Commercial Features 
+The -XX:+UnlockCommercialFeatures and -XX:+LogCommercialFeatures command line arguments have been obsoleted, and will generate a warning message if used. 
+
+security-libs/org.ietf.jgss
+➜ Deprecate Stream-Based GSSContext Methods 
+The stream-based methods in GSSContext have been deprecated in this release since GSS-API works on opaque tokens and has not defined a wire protocol. 
+
+tools
+➜ JEP 336 Deprecate the Pack200 Tools and API 
+Deprecate the pack200 and unpack200 tools, and the Pack200 API in java.util.jar (JEP 336).
+
+Other Notes
+
+client-libs/java.awt
+➜ GTK3 Is Now the Default on Linux/Unix 
+Newer versions of Linux, Solaris, and other Unix flavor desktop environments use GTK3, while still supporting GTK2.
+
+core-libs/java.io:serialization
+➜ Better Stack Walking 
+New access checks have been added during the object creation phase of deserialization. 
+
+core-libs/java.lang
+➜ Method ClassgetAnnotation Throws a TypeNotPresentException When the Annotation Class Is Not Present 
+When java.lang.Class::getAnnotation is called to retrieve an annotation, and the annotation has an array value that references a missing class, attempting to read t
+
+core-libs/java.lang
+➜ Make Some System Properties Effectively readonly 
+The values of java.home, user.home, user.dir, and user.name properties are cached at startup. Changes made using System::setProperty after startup will not change the behavior of APIs in the java.base module.
+
+core-libs/java.lang
+➜ java.lang.ref.Reference Does Not Support Cloning 
+java.lang.ref.Reference::clone method always throws CloneNotSupportedException. Reference objects cannot be meaningfully cloned. 
+
+core-libs/java.lang.invoke
+➜ filterArguments Runs Multiple Filters in the Wrong Order 
+The specification of the method java.lang.invoke.MethodHandles.filterArguments was clarified to state more clearly that filter arguments are invoked in left to right order.
+
+core-libs/java.lang.module
+➜ Change to Policy for the Default Set of Modules Resolved When Compiling or Running Code on the Class Path 
+The default set of root modules when compiling code or running code on the class path has changed in JDK 11 to be all observable system modules that export an API. The only observable change is that the java.se module is no longer resolved by default.
+
+See JDK-8197532
+  
+
+core-libs/java.net
+➜ URLClassLoader Does Not Specify Behavior When URL Array Contains null 
+URLClassLoader's constructors are specified to throw a NullPointerException if the URL array includes a null element.
+
+See JDK-8198803
+  
+
+core-libs/java.nio
+➜ Readiness Information Previously Recorded in SelectionKey Ready Set Not Preserved 
+The java.nio.channels.Selector API specifies precisely how selection operations add selection keys to the selector's selected-key set or update the readiness information of selection keys already in the set. The Selector implementations in the JDK did not historically implement the latter correctly, meaning that the readiness information was overridden and previous readiness information was not preserved for cases where a channel is selected and its key was already in the selected-key set. This issue has been fixed in JDK 11. This behavior change may surprise code that invokes select (or selectNow) and doesn't process keys added to the selected-key set before performing another selection operation.
+
+See JDK-8200458
+  
+
+core-libs/java.nio
+➜ SelectableChannel.register Can Be Invoked While a Selection Operation Is in Progress 
+java.nio.channels.Selector historically specified its key set (the set containing the keys representing the channels registered with the selector) to not be thread safe. 
